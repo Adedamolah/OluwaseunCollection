@@ -79,6 +79,7 @@ if (navToggle && navLinks) {
 }
 
  // Firebase config
+// Firebase config (same as admin)
 const firebaseConfig = {
   apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
   authDomain: "oluwaseun-collection.firebaseapp.com",
@@ -91,27 +92,36 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
- 
-
-// Container where products will be displayed
 const db = firebase.firestore();
-const productsContainer = document.getElementById("products");
 
-db.collection("products").orderBy("createdAt", "desc").get().then(snapshot => {
-  snapshot.forEach(doc => {
-    const data = doc.data();
+// Wait until DOM loads
+document.addEventListener("DOMContentLoaded", () => {
+  const productsContainer = document.getElementById("products");
 
-    const productDiv = document.createElement("div");
-    productDiv.classList.add("product");
+  if (!productsContainer) {
+    console.error("Products container not found in HTML!");
+    return;
+  }
 
-    productDiv.innerHTML = `
-      <img src="${data.image}" alt="${data.name}" />
-      <h3>${data.name}</h3>
-      <p>₦${data.price}</p>
-    `;
+  db.collection("products").orderBy("createdAt", "desc").get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
 
-    productsContainer.appendChild(productDiv);
-  });
+        // Create product card
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product-card");
+
+        productDiv.innerHTML = `
+          <img src="${data.image}" alt="${data.name}" />
+          <h3>${data.name}</h3>
+          <p>₦${data.price}</p>
+        `;
+
+        productsContainer.appendChild(productDiv);
+      });
+    })
+    .catch(error => {
+      console.error("Error fetching products:", error);
+    });
 });
-
-
