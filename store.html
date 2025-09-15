@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="script.js" defer></script>
+
   <title>Oluwaseun Collections - Store</title>
   <style>
     /* Reset */
@@ -147,65 +149,11 @@
   </nav>
 
   <!-- Product Container -->
-  <section class="products" id="products-container">
+  <section class="products" id="products-container" id="products" >
     <p>Loading products...</p>
   </section>
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-  <script>
-    // ✅ Your Firebase config here
-    const firebaseConfig = {
-  apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
-  authDomain: "oluwaseun-collection.firebaseapp.com",
-  projectId: "oluwaseun-collection",
-  storageBucket: "oluwaseun-collection.firebasestorage.app",
-  messagingSenderId: "759387634255",
-  appId: "1:759387634255:web:565d9c6ac340ebd361883a",
-  measurementId: "G-YEQZMCBFK9"
-};
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // Load Products
-    async function loadProducts() {
-      const container = document.getElementById("products-container");
-      container.innerHTML = "Fetching products...";
-
-      try {
-        const snapshot = await db.collection("products").get();
-        if (snapshot.empty) {
-          container.innerHTML = "<p>No products found.</p>";
-          return;
-        }
-
-        container.innerHTML = "";
-        snapshot.forEach(doc => {
-          const p = doc.data();
-          const waMessage = encodeURIComponent(`I want to purchase ${p.name}`);
-          const waLink = `https://wa.me/2348147405464?text=${waMessage}`;
-
-          const card = `
-            <div class="card">
-              <img src="${p.image}" alt="${p.name}">
-              <div class="info">
-                <h3>${p.name}</h3>
-                <p class="price">₦${p.price}</p>
-                <a href="${waLink}" target="_blank">Buy Now</a>
-              </div>
-            </div>
-          `;
-          container.innerHTML += card;
-        });
-      } catch (err) {
-        console.error("Error loading products:", err);
-        container.innerHTML = "<p style='color:red;'>Error loading products. Check console.</p>";
-      }
-    }
-
-    loadProducts();
-  </script>
-</body>
+  </body>
 </html>
+
