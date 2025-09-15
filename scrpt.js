@@ -77,3 +77,41 @@ if (navToggle && navLinks) {
     navToggle.classList.toggle('open');
   });
 }
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+
+  // Firebase config (same as admin page)
+  const firebaseConfig = {
+    apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
+    authDomain: "oluwaseun-collection.firebaseapp.com",
+    projectId: "oluwaseun-collection",
+    storageBucket: "oluwaseun-collection.appspot.com",
+    messagingSenderId: "759387634255",
+    appId: "1:759387634255:web:565d9c6ac340ebd361883a",
+    measurementId: "G-YEQZMCBFK9"
+  };
+
+  // Init Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Where to render products
+  const productsDiv = document.getElementById("products");
+
+  // Fetch products from Firestore
+  db.collection("products").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+    productsDiv.innerHTML = ""; // clear first
+    snapshot.forEach((doc) => {
+      const product = doc.data();
+      productsDiv.innerHTML += `
+        <div class="product-card">
+          <img src="${product.image}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p>₦${product.price}</p>
+        </div>
+      `;
+    });
+  });
+
