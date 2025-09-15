@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oluwaseun Collections - Store</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #fff 50%, #111 50%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    nav {
+      background: #000;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    /* Product Grid */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  flex: 1;
+  max-width: 1200px;
+  margin: auto; /* center grid */
+}
+
+.card {
+  background: #fff;              /* White background */
+  border-radius: 15px;           /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Light shadow */
+  overflow: hidden;              /* Clip image corners */
+  max-width: 280px;
+  margin: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25); /* Stronger shadow on hover */
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.card .info {
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card .info h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.card .info .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 12px;
+}
+
+.card .info a {
+  display: inline-block;
+  text-align: center;
+  padding: 10px;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.card .info a:hover {
+  background: #333;
+}
+
+    /* Mobile Navbar */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav ul {
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      nav ul li {
+        margin: 5px 10px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <h1>Oluwaseun Collections</h1>
+   <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="bags.html">Store</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    
+  </nav>
+
+  <!-- Product Container -->
+  <section class="products" id="products-container">
+    <p>Loading products...</p>
+  </section>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // ✅ Your Firebase config here
+    const firebaseConfig = {
+  apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
+  authDomain: "oluwaseun-collection.firebaseapp.com",
+  projectId: "oluwaseun-collection",
+  storageBucket: "oluwaseun-collection.firebasestorage.app",
+  messagingSenderId: "759387634255",
+  appId: "1:759387634255:web:565d9c6ac340ebd361883a",
+  measurementId: "G-YEQZMCBFK9"
+};
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Load Products
+    async function loadProducts() {
+      const container = document.getElementById("products-container");
+      container.innerHTML = "Fetching products...";
+
+      try {
+        const snapshot = await db.collection("products").get();
+        if (snapshot.empty) {
+          container.innerHTML = "<p>No products found.</p>";
+          return;
+        }
+
+        container.innerHTML = "";
+        snapshot.forEach(doc => {
+          const p = doc.data();
+          const waMessage = encodeURIComponent(`I want to purchase ${p.name}`);
+          const waLink = `https://wa.me/2348147405464?text=${waMessage}`;
+
+          const card = `
+            <div class="card">
+              <img src="${p.image}" alt="${p.name}">
+              <div class="info">
+                <h3>${p.name}</h3>
+                <p class="price">₦${p.price}</p>
+                <a href="${waLink}" target="_blank">Buy Now</a>
+              </div>
+            </div>
+          `;
+          container.innerHTML += card;
+        });
+      } catch (err) {
+        console.error("Error loading products:", err);
+        container.innerHTML = "<p style='color:red;'>Error loading products. Check console.</p>";
+      }
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>

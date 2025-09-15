@@ -1,0 +1,61 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Oluwaseun Collections</title>
+
+  <!-- Google font: Poppins (balanced weight, not too heavy) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Oluwaseun Collections</div>
+
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="bags.html">Store</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+      
+  </nav>
+
+  <main class="hero" role="main">
+    <div class="hero-left">
+      <div class="hero-content">
+        <div class="text-wrap is-enter">
+          <h1 id="changing-text">Welcome to Oluwaseun Collections</h1>
+          <p id="changing-subtext">Where style meets elegance — Bags, shoes, home décor & more.</p>
+          <a class="cta" href="store.html">Shop Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curved visual divider -->
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="hero-right">
+      <div class="img-wrap is-enter">
+        <img id="changing-image" src="bg1.png" alt="Featured product — bag" />
+      </div>
+    </div>
+  </main>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
+
+  <script src="script.js"></script>
+</body>
+</html>
