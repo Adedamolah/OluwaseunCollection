@@ -91,26 +91,27 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+ 
 
 // Container where products will be displayed
-const productList = document.getElementById("productList");
+const db = firebase.firestore();
+const productsContainer = document.getElementById("products");
 
-// Fetch and display products
-db.collection("products")
-  .orderBy("createdAt", "desc") // latest products first
-  .onSnapshot((snapshot) => {
-    productList.innerHTML = ""; // clear previous products
-    snapshot.forEach((doc) => {
-      const product = doc.data();
-      productList.innerHTML += `
-        <div class="product-card">
-          <img src="${product.image}" alt="${product.name}">
-          <h3>${product.name}</h3>
-          <p>₦${product.price}</p>
-        </div>
-      `;
-    });
+db.collection("products").orderBy("createdAt", "desc").get().then(snapshot => {
+  snapshot.forEach(doc => {
+    const data = doc.data();
+
+    const productDiv = document.createElement("div");
+    productDiv.classList.add("product");
+
+    productDiv.innerHTML = `
+      <img src="${data.image}" alt="${data.name}" />
+      <h3>${data.name}</h3>
+      <p>₦${data.price}</p>
+    `;
+
+    productsContainer.appendChild(productDiv);
   });
+});
 
 
