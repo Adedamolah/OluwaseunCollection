@@ -78,36 +78,34 @@ if (navToggle && navLinks) {
   });
 }
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+ // Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
+  authDomain: "oluwaseun-collection.firebaseapp.com",
+  projectId: "oluwaseun-collection",
+  storageBucket: "oluwaseun-collection.appspot.com",
+  messagingSenderId: "759387634255",
+  appId: "1:759387634255:web:565d9c6ac340ebd361883a",
+  measurementId: "G-YEQZMCBFK9"
+};
 
-  // Firebase config (same as admin page)
-  const firebaseConfig = {
-    apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
-    authDomain: "oluwaseun-collection.firebaseapp.com",
-    projectId: "oluwaseun-collection",
-    storageBucket: "oluwaseun-collection.appspot.com",
-    messagingSenderId: "759387634255",
-    appId: "1:759387634255:web:565d9c6ac340ebd361883a",
-    measurementId: "G-YEQZMCBFK9"
-  };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-  // Init Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+// Container where products will be displayed
+const productList = document.getElementById("productList");
 
-  // Where to render products
-  const productsDiv = document.getElementById("products");
-
-  // Fetch products from Firestore
-  db.collection("products").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
-    productsDiv.innerHTML = ""; // clear first
+// Fetch and display products
+db.collection("products")
+  .orderBy("createdAt", "desc") // latest products first
+  .onSnapshot((snapshot) => {
+    productList.innerHTML = ""; // clear previous products
     snapshot.forEach((doc) => {
       const product = doc.data();
-      productsDiv.innerHTML += `
+      productList.innerHTML += `
         <div class="product-card">
-          <img src="${product.image}" alt="${product.name}" />
+          <img src="${product.image}" alt="${product.name}">
           <h3>${product.name}</h3>
           <p>₦${product.price}</p>
         </div>
