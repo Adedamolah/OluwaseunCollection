@@ -108,18 +108,19 @@ document.addEventListener("DOMContentLoaded", () => {
       snapshot.forEach(doc => {
         const data = doc.data();
 
+        // WhatsApp order link
+        const phone = "2348147405464"; // ✅ your WhatsApp number
+        const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)} for ₦${data.price}`;
+
         // Create product card
         const productDiv = document.createElement("div");
         productDiv.classList.add("product-card");
-        const phone = "2348147405464"; // put your WhatsApp number here
-        const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)
 
         productDiv.innerHTML = `
           <img src="${data.image}" alt="${data.name}" />
           <h3>${data.name}</h3>
           <p>₦${data.price}</p>
           <button onclick="window.open('${waLink}', '_blank')">Order Now</button>
-
         `;
 
         productsContainer.appendChild(productDiv);
@@ -129,5 +130,4 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching products:", error);
     });
 });
-
 
