@@ -6,22 +6,22 @@
   <title>Oluwaseun Collections Store</title>
   <style>
     /* General body & theme */
+ 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
+      background: linear-gradient(to right, #fff 50%, #111 50%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Navbar */
-    nav {
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
+   nav {
       background: #000;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     nav ul {
@@ -32,11 +32,21 @@
       padding: 0;
     }
 
+   nav h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
     nav ul li a {
-      color: #fff;
       text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s;
+      color: #fff;
+      font-size: 14px;
     }
 
     nav ul li a:hover {
@@ -99,10 +109,17 @@
     }
 
     /* Responsive */
-    @media (max-width: 600px) {
-      nav ul {
+    @media (max-width: 768px) {
+      nav {
         flex-direction: column;
-        gap: 1rem;
+        align-items: flex-start;
+      }
+      nav ul {
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      nav ul li {
+        margin: 5px 10px 0 0;
       }
     }
   </style>
@@ -111,7 +128,7 @@
 
   <!-- Navbar -->
   <nav>
-    <ul>
+    <ul class="nav-links" >
       <li><a href="#">Home</a></li>
       <li><a href="#">Collections</a></li>
       <li><a href="#">About</a></li>
@@ -128,6 +145,7 @@
   <script src="script.js"></script>
   </body>
 </html>
+
 
 
 
