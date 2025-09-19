@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oluwaseun Collections Store</title>
   <style>
-    /* General body & theme */
- 
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
     body {
       background: linear-gradient(to right, #fff 50%, #111 50%);
       min-height: 100vh;
@@ -15,7 +21,7 @@
     }
 
     /* Navbar */
-   nav {
+    nav {
       background: #000;
       color: #fff;
       padding: 15px 20px;
@@ -23,13 +29,7 @@
       justify-content: space-between;
       align-items: center;
     }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-    }
-
-   nav h1 {
+    nav h1 {
       font-size: 20px;
       font-weight: bold;
     }
@@ -46,69 +46,79 @@
       font-size: 14px;
     }
 
-    nav ul li a:hover {
-      color: #f39c12;
-    }
+    /* Product Grid */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  flex: 1;
+  max-width: 1200px;
+  margin: auto; /* center grid */
+}
 
-    /* Products container */
-    #products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-    }
+.card {
+  background: #fff;              /* White background */
+  border-radius: 15px;           /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Light shadow */
+  overflow: hidden;              /* Clip image corners */
+  max-width: 280px;
+  margin: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
 
-    /* Product card */
-    .product-card {
-      background: #fff;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
-      display: flex;
-      max-width: 280px;
-       margin: auto;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding-bottom: 1rem;
-    }
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25); /* Stronger shadow on hover */
+}
 
-    .product-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
 
-    .product-card h3 {
-      margin: 0.5rem 0 0.3rem 0;
-    }
+.card .info {
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    .product-card p {
-      margin: 0.3rem 0 0.7rem 0;
-      font-weight: 600;
-    }
+.card .info h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #111;
+}
 
-    .product-card button {
-      background: #f39c12;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+.card .info .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 12px;
+}
 
-    .product-card button:hover {
-      background: #e67e22;
-    }
+.card .info a {
+  display: inline-block;
+  text-align: center;
+  padding: 10px;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
 
-    .product-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
+.card .info a:hover {
+  background: #333;
+}
 
-    /* Responsive */
+    /* Mobile Navbar */
     @media (max-width: 768px) {
       nav {
         flex-direction: column;
@@ -124,6 +134,7 @@
     }
   </style>
 </head>
+  
 <body>
 
   <!-- Navbar -->
@@ -138,7 +149,9 @@
   </nav>
 
   <!-- Products container -->
-  <div id="products"></div>
+  <div class="products" id="products">
+     <p>Loading products...</p>
+  </div>
 
    <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -146,6 +159,7 @@
   <script src="script.js"></script>
   </body>
 </html>
+
 
 
 
