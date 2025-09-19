@@ -111,12 +111,15 @@ document.addEventListener("DOMContentLoaded", () => {
         // Create product card
         const productDiv = document.createElement("div");
         productDiv.classList.add("product-card");
+        const phone = "2348147405464"; // put your WhatsApp number here
+        const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)
 
         productDiv.innerHTML = `
           <img src="${data.image}" alt="${data.name}" />
           <h3>${data.name}</h3>
           <p>₦${data.price}</p>
-         <a href="${waLink}" target="_blank">Buy Now</a>
+          <button onclick="window.open('${waLink}', '_blank')">Order Now</button>
+
         `;
 
         productsContainer.appendChild(productDiv);
@@ -126,4 +129,5 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching products:", error);
     });
 });
+
 
