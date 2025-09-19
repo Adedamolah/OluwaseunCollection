@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <img src="${data.image}" alt="${data.name}" />
           <h3>${data.name}</h3>
           <p>₦${data.price}</p>
+         <a href="${waLink}" target="_blank">Buy Now</a>
         `;
 
         productsContainer.appendChild(productDiv);
@@ -125,3 +126,4 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching products:", error);
     });
 });
+
