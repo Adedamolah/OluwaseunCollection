@@ -67,6 +67,7 @@
     .card {
       background: #fff;
       border-radius: 15px;
+      border: 2px solid #000; /* Black border */
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -75,7 +76,7 @@
     }
     .card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 0 20px rgba(0,0,0,0.4); /* Glow effect */
     }
     .card img {
       width: 100%;
@@ -105,15 +106,19 @@
     .card .info a {
       text-align: center;
       padding: 10px;
-      background: #111;
+      background: #000; /* Black background */
       color: #fff;
       text-decoration: none;
       border-radius: 8px;
-      transition: background 0.3s ease, transform 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     .card .info a:hover {
-      background: #333;
+      background: #fff;      /* Invert colors */
+      color: #000;
+      border: 1px solid #000;
       transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(0,0,0,0.4); /* Glow effect */
     }
 
     /* Mobile Navbar */
@@ -149,22 +154,9 @@
     <p>Loading products...</p>
   </section>
 
-
    <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <script src="script.js"></script>
-  </body>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
