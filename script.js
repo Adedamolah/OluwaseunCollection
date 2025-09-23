@@ -80,6 +80,7 @@ if (navToggle && navLinks) {
 
  // Firebase config
 // Firebase config (same as admin)
+// === Firebase Config ===
 const firebaseConfig = {
   apiKey: "AIzaSyD39HLOm27VdzQwXjKl-cd96WC5VTJTnsQ",
   authDomain: "oluwaseun-collection.firebaseapp.com",
@@ -94,47 +95,47 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Wait until DOM loads
-document.addEventListener("DOMContentLoaded", () => {
-  const productsContainer = document.getElementById("products");
+const phone = "2348147405464"; // WhatsApp number
+const productsContainer = document.getElementById("products");
 
-  if (!productsContainer) {
-    console.error("Products container not found in HTML!");
-    return;
-  }
+// === Fetch products from Firestore ===
+db.collection("products").orderBy("createdAt", "desc").get()
+  .then((querySnapshot) => {
+    productsContainer.innerHTML = ""; // clear "Loading products..."
 
-  db.collection("products").orderBy("createdAt", "desc").get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
+    if (querySnapshot.empty) {
+      productsContainer.innerHTML = "<p>No products found.</p>";
+      return;
+    }
 
-        // WhatsApp order link
-        const phone = "2348147405464"; // ✅ your WhatsApp number
-        const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)} for ₦${data.price}`;
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
 
-        // Create product card
+      // Create product card
       const productDiv = document.createElement("div");
-productDiv.classList.add("card");
+      productDiv.classList.add("card");
 
-const phone = "2348147405464"; 
-const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)}`;
+      productDiv.innerHTML = `
+        <img src="${data.image}" alt="${data.name}" />
+        <div class="info">
+          <h3>${data.name}</h3>
+          <p class="price">₦${data.price}</p>
+          <a class="order-btn" href="https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)}" target="_blank">
+            Buy Now
+          </a>
+        </div>
+      `;
 
-productDiv.innerHTML = `
-  <img src="${data.image}" alt="${data.name}" />
-  <div class="info">
-    <h3>${data.name}</h3>
-    <p class="price">₦${data.price}</p>
-    <a href="${waLink}" target="_blank">Order Now</a>
-  </div>
-`;
-productsContainer.appendChild(productDiv);
-
-      });
-    })
-    .catch(error => {
-      console.error("Error fetching products:", error);
+      productsContainer.appendChild(productDiv);
     });
+  })
+  .catch((error) => {
+    console.error("Error fetching products: ", error);
+    productsContainer.innerHTML = "<p>Failed to load products.</p>";
+  });
+
 });
+
 
 
 
