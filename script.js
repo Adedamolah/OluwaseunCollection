@@ -134,7 +134,8 @@ db.collection("products").orderBy("createdAt", "desc").get()
     productsContainer.innerHTML = "<p>Failed to load products.</p>";
   });
 
-});
+ 
+
 
 
 
