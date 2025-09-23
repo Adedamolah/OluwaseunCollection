@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Create product card
         const productDiv = document.createElement("div");
-        productDiv.classList.add("product-card");
+        productDiv.classList.add("card");
 
         productDiv.innerHTML = `
           <img src="${data.image}" alt="${data.name}" />
@@ -130,4 +130,5 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching products:", error);
     });
 });
+
 
