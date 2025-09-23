@@ -113,22 +113,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)} for ₦${data.price}`;
 
         // Create product card
-        const productDiv = document.createElement("div");
-        productDiv.classList.add("card");
+      const productDiv = document.createElement("div");
+productDiv.classList.add("card");
 
-        productDiv.innerHTML = `
-          <img src="${data.image}" alt="${data.name}" />
-          <h3>${data.name}</h3>
-          <p>₦${data.price}</p>
-          <button onclick="window.open('${waLink}', '_blank')">Order Now</button>
-        `;
+const phone = "2348147405464"; 
+const waLink = `https://wa.me/${phone}?text=Hello, I want to order ${encodeURIComponent(data.name)}`;
 
-        productsContainer.appendChild(productDiv);
+productDiv.innerHTML = `
+  <img src="${data.image}" alt="${data.name}" />
+  <div class="info">
+    <h3>${data.name}</h3>
+    <p class="price">₦${data.price}</p>
+    <a href="${waLink}" target="_blank">Order Now</a>
+  </div>
+`;
+productsContainer.appendChild(productDiv);
+
       });
     })
     .catch(error => {
       console.error("Error fetching products:", error);
     });
 });
+
 
 
